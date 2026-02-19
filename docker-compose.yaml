@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:15
+    restart: no
+    environment:
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DB=prueba
+  api:
+    image: python_api
+    build: .
+    restart: no
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+    environment:
+      - DB_TYPE=postgresql
+      - POSTGRES_DB=prueba
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASS=example
+      - DB_HOST=db
